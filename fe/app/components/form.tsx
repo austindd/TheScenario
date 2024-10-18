@@ -6,7 +6,7 @@ import { ContentRecord } from '@/app/components/dataList';
 
 type FormValues = Omit<ContentRecord, '_id'>;
 
-const CustomForm: React.FC = () => {
+const DataForm: React.FC = () => {
 	const formik = useFormik<FormValues>({
 		initialValues: {
 			userName: '',
@@ -19,10 +19,12 @@ const CustomForm: React.FC = () => {
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
-			<FormInputList />
-			<Button type="submit">Submit</Button>
+			<div className="flex flex-col gap-4">
+				<FormInputList />
+				<Button type="submit" size="lg">Submit</Button>
+			</div>
 		</form>
 	);
 };
 
-export default CustomForm;
+export default DataForm;
