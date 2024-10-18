@@ -1,6 +1,5 @@
-
 type ContentRecord = {
-	id: string;
+	_id: string;
 	userName: string;
 	content: string;
 }
@@ -9,9 +8,9 @@ export const DataList = (props: { items: ContentRecord[] }) => {
 	return (
 		<div className="flex flex-col">
 			{props.items.map((item, index) => {
-				const { id, userName, content } = item;
-				return (<div key={id} className="flex flex-row">
-					<div>{id}</div>
+				const { _id, userName, content } = item;
+				return (<div key={_id} className="flex flex-row">
+					<div>{_id}</div>
 					<div>{userName}</div>
 					<div>{content}</div>
 				</div>)
