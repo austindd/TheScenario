@@ -1,41 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import FormInputList from "./components/formInputList"
 import { Button, Divider } from "@nextui-org/react";
-import DataList from "@/app/components/dataList";
+import DataList, { ContentRecord } from "@/app/components/dataList";
 import DataForm from "@/app/components/form";
 import { useContentApi } from "@/app/hooks/useContentApi";
 
 export default () => {
 
-  const revalidatedData = async () => {
-    const result = await fetch(`http://127.0.01:3000/data`, {
-        method: 'GET',
-        mode: 'no-cors',
-    });
+  // const revalidatedData = async () => {
+  //   const result = await fetch(`http://127.0.01:3000/data`, {
+  //       method: 'GET',
+  //       mode: 'no-cors',
+  //   });
 
-    console.log(result);
+  //   console.log(result);
 
-    return result;
-  }
-  
-  const [state, setState] = useState<Response>();
-  const [loadData, setLoadData] = useState(true);
+  //   return result;
+  // }
 
-  const contentApi = useContentApi();
+  // const [state, setState] = useState<ContentRecord[] | null>(null);
+  // const [loadData, setLoadData] = useState(true);
 
-  useEffect(()=>{
+  const { data, isLoading, error, fetchData, addData } = useContentApi();
 
-    if (!loadData)
+  useEffect(() => {
+
+    if (isLoading)
       return;
 
-    setLoadData(false)
+    fetchData()
 
-    revalidatedData()
-    .then(res=>{
-      setState(res)
-    })
+    // revalidatedData()
+    // .then(res=>{
+    //   setState(res)
+    // })
   })
 
   const dummyItems = [
@@ -48,7 +48,7 @@ export default () => {
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="grid grid-cols-3 gap-8 items-center">
         <div className="items-center">
-          <DataForm />
+          <DataForm onSubmit={(values) => {addData(values)}} />
         </div>
         <div className="items-center">
           <Divider orientation="vertical" />
@@ -58,7 +58,7 @@ export default () => {
         </div>
       </div>
       <div>
-        <Button onClick={() => setLoadData(true)}>Update Data</Button>
+        <Button onClick={fetchData}>Update List</Button>
       </div>
     </main>
   )
