@@ -6,7 +6,7 @@ import { ContentRecord } from '@/app/components/dataList';
 
 type FormValues = Omit<ContentRecord, '_id'>;
 
-const DataForm: React.FC = () => {
+const DataForm = (props: {onSubmit: (values: FormValues) => void}) => {
 	const formik = useFormik<FormValues>({
 		initialValues: {
 			userName: '',
@@ -14,6 +14,7 @@ const DataForm: React.FC = () => {
 		},
 		onSubmit: (values) => {
 			console.log(values);
+			props.onSubmit(values);
 		},
 	});
 
