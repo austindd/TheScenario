@@ -11,7 +11,7 @@ export class AppService {
 
 
   async getAll() {
-    return [{data: '123'}]
+    return [{userName: 'TestUser', data: '123'}]
 
     //return await this.dataDao.getAll()
   }
