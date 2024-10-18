@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react"
 import FormInputList from "./components/formInputList"
-import { Divider } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import DataList from "@/app/components/dataList";
+import DataForm from "@/app/components/form";
+import { useContentApi } from "@/app/hooks/useContentApi";
 
 export default () => {
 
@@ -20,6 +22,8 @@ export default () => {
   
   const [state, setState] = useState<Response>();
   const [loadData, setLoadData] = useState(true);
+
+  const contentApi = useContentApi();
 
   useEffect(()=>{
 
@@ -44,7 +48,7 @@ export default () => {
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="grid grid-cols-3 gap-8 items-center">
         <div className="items-center">
-          <FormInputList />
+          <DataForm />
         </div>
         <div className="items-center">
           <Divider orientation="vertical" />
@@ -52,6 +56,9 @@ export default () => {
         <div className="items-center">
           <DataList items={dummyItems} />
         </div>
+      </div>
+      <div>
+        <Button onClick={() => setLoadData(true)}>Update Data</Button>
       </div>
     </main>
   )
