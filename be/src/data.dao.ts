@@ -23,7 +23,9 @@ export class DataDao {
     }
 
     async create(data: Data) {
-        await this.dataModel.create(data);
+        return await this.dataModel.create(data).then(doc => {
+            return true;
+        });
     }
 
     async delete(id: string) {
