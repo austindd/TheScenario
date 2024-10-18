@@ -13,7 +13,10 @@ export class Data {
   _id?: string;
   
   @Prop({type: String})
-  data: string;
+  userName: string;
+
+  @Prop({type: String})
+  content: string;
 }
 
 export const DataSchema = SchemaFactory.createForClass(Data);
