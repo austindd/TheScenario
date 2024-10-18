@@ -41,13 +41,17 @@ export default () => {
   ]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <FormInputList />
-      </div>
-        <Divider orientation="vertical" />
-      <div>
-        <DataList items={dummyItems} />
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <div className="grid grid-cols-3 gap-8 items-center">
+        <div className="items-center">
+          <FormInputList />
+        </div>
+        <div className="items-center">
+          <Divider orientation="vertical" />
+        </div>
+        <div className="items-center">
+          <DataList items={dummyItems} />
+        </div>
       </div>
     </main>
   )
