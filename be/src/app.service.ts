@@ -15,13 +15,10 @@ export class AppService {
 
 
   async getAll() {
-    // return [{_id: '1', userName: 'TestUser', content: '123'}]
-
     return await this.dataDao.getAll()
   }
 
   async create(data: DataDto) {
-    // return {_id: '1', userName: 'TestUser', content: '123'}
     const newData = new this.dataModel(data);
     return await this.dataDao.create(newData)
   }
