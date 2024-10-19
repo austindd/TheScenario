@@ -13,7 +13,6 @@ const fetchAllContent = async () => {
 const addContent = async (data: Omit<ContentRecord, '_id'>) => {
 	const result = await fetch(`http://127.0.01:3000/data`, {
 		method: 'POST',
-		// mode: 'no-cors',
 		body: JSON.stringify(data),
 		headers: {
 			'Content-Type': 'application/json'
@@ -21,6 +20,13 @@ const addContent = async (data: Omit<ContentRecord, '_id'>) => {
 	});
 	return result;
 };
+
+const deleteContent = async (id: string) => {
+	const result = await fetch(`http://127.0.01:3000/data/${id}`, {
+		method: 'DELETE',
+	});
+	return result;
+}
 
 export const useContentApi = () => {
 	const [state, setState] = useState<ContentRecord[] | null>(null);
@@ -81,6 +87,28 @@ export const useContentApi = () => {
 		});
 	}, [setState, setLoadData, setIsModifyingData, setError]);
 
+	const deleteData = useCallback(async (id: string) => {
+		setIsModifyingData(true);
+		deleteContent(id).then(async res => {
+			try {
+				if (res.ok) {
+					console.log("Content deleted: ", id);
+				}
+			} catch (error) {
+				if (!!error && error instanceof Error) {
+					setError(error);
+				}
+			}
+			setIsModifyingData(false);
+			setLoadData(true);
+		}).catch(error => {
+			if (!!error && error instanceof Error) {
+				setError(error);
+			}
+			setIsModifyingData(false);
+		});
+	}, [setState, setLoadData, setIsModifyingData, setError]);
+
 	return {
 		data: state,
 		isLoading,
@@ -88,5 +116,6 @@ export const useContentApi = () => {
 		error,
 		fetchData,
 		addData,
+		deleteData,
 	};
 };

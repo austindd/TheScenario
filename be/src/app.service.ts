@@ -22,4 +22,8 @@ export class AppService {
     const newData = new this.dataModel(data);
     return await this.dataDao.create(newData)
   }
+
+  async delete(id: string) {
+    return await this.dataDao.delete(id)
+  }
 }
