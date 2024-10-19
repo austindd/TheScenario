@@ -36,6 +36,7 @@ const DataForm = (props: { onSubmit: (values: FormValues) => void }) => {
 						radius='md'
 						type="submit"
 						size="lg"
+						color="secondary"
 					>
 						Submit
 					</Button>
