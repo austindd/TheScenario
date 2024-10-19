@@ -1,4 +1,5 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { IsNotEmpty, IsOptional } from "class-validator";
 import { v4 as uuid_v4 } from 'uuid';
 
 @Schema({
@@ -9,15 +10,16 @@ import { v4 as uuid_v4 } from 'uuid';
   }
 })
 export class Data {
-  @Prop({ type: String, default: uuid_v4 })
+  @IsOptional()
+  @Prop({ type: String, default: uuid_v4, required: false })
   _id?: string;
   
+  @IsNotEmpty()
   @Prop({type: String})
-  userName: string;
-
-  @Prop({type: String})
-  content: string;
+  data: string;
 }
+
+export type DataDocument = Data & Document;
 
 export const DataSchema = SchemaFactory.createForClass(Data);
 
