@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Req, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Req, Delete, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { DataDto } from 'src/data.dto';
 
@@ -13,11 +13,11 @@ export class AppController {
 
   @Post()
   create(@Body() body: DataDto) {
-    return this.appService.create(body);
-  }
+      return this.appService.create(body);
+    }
 
-  @Delete(':id')
-  delete(@Param() id: string) {
-    return this.appService.delete(id);
+  @Delete()
+  delete (@Query('id') id: string) {
+      return this.appService.delete(id);
+    }
   }
-}
