@@ -17,9 +17,9 @@ const DataForm = (props: { onSubmit: (values: FormValues) => void }) => {
 	});
 
 	return (
-		<form onSubmit={formik.handleSubmit}>
-			<div className="flex flex-col gap-8">
-				<div className="flex flex-col gap-4">
+		<form className="w-full" onSubmit={formik.handleSubmit}>
+			<div className="w-full flex flex-col gap-8">
+				<div className="w-full flex flex-col gap-4">
 					<Input
 						name="data"
 						value={formik.values.data}
