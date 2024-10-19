@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import DataList from "@/app/components/dataList";
-import DataForm from "@/app/components/form";
+import DataForm from "@/app/components/dataForm";
 import { useContentApi } from "@/app/hooks/useContentApi";
 
 export default () => {

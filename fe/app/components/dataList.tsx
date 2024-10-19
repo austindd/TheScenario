@@ -1,4 +1,4 @@
-import { Button, Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 
 export type ContentRecord = {
 	_id?: string;

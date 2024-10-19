@@ -1,11 +1,9 @@
 import { ContentRecord } from "@/app/components/dataList";
 import { useCallback, useEffect, useMemo, useState } from "react";
-// import { v4 as uuidv4 } from 'uuid';
 
 const fetchAllContent = async () => {
 	const result = await fetch(`http://127.0.01:3000/data`, {
 		method: 'GET',
-		// mode: 'no-cors',
 	});
 	return result;
 };
@@ -45,7 +43,6 @@ export const useContentApi = () => {
 			try {
 				const data = await res.json() as ContentRecord[];
 				setState(data);
-				console.log(data);
 			} catch (error) {
 				if (!!error && error instanceof Error) {
 					setError(error);
@@ -69,16 +66,6 @@ export const useContentApi = () => {
 		setIsModifyingData(true);
 		setLoadData(false);
 		addContent(data).then(async res => {
-			try {
-				if (res.ok) {
-					const result = await res.json() as ContentRecord;
-					console.log("Content added: ", result);
-				}
-			} catch (error) {
-				if (!!error && error instanceof Error) {
-					setError(error);
-				}
-			}
 			setIsModifyingData(false);
 			fetchData();
 		}).catch(error => {
@@ -94,15 +81,6 @@ export const useContentApi = () => {
 		setIsModifyingData(true);
 		setLoadData(false);
 		deleteContent(id).then(async res => {
-			try {
-				if (res.ok) {
-					console.log("Content deleted: ", id);
-				}
-			} catch (error) {
-				if (!!error && error instanceof Error) {
-					setError(error);
-				}
-			}
 			setIsModifyingData(false);
 			fetchData();
 		}).catch(error => {
