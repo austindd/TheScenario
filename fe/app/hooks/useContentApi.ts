@@ -1,5 +1,6 @@
 import { ContentRecord } from "@/app/components/dataList";
 import { useCallback, useEffect, useState } from "react";
+// import { v4 as uuidv4 } from 'uuid';
 
 const fetchAllContent = async () => {
 	const result = await fetch(`http://127.0.01:3000/data`, {
@@ -12,7 +13,7 @@ const fetchAllContent = async () => {
 const addContent = async (data: Omit<ContentRecord, '_id'>) => {
 	const result = await fetch(`http://127.0.01:3000/data`, {
 		method: 'POST',
-		mode: 'no-cors',
+		// mode: 'no-cors',
 		body: JSON.stringify(data),
 		headers: {
 			'Content-Type': 'application/json'
@@ -61,10 +62,9 @@ export const useContentApi = () => {
 		setIsModifyingData(true);
 		addContent(data).then(async res => {
 			try {
-				const isOk = res.ok && await res.json();
-				if (isOk === true) {
-					console.log("Content added: ", data);
-					return true;
+				if (res.ok) {
+					const result = await res.json() as ContentRecord;
+					console.log("Content added: ", result);
 				}
 			} catch (error) {
 				if (!!error && error instanceof Error) {
