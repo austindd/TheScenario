@@ -21,16 +21,17 @@ export default () => {
   // }
 
   // const [state, setState] = useState<ContentRecord[] | null>(null);
-  // const [loadData, setLoadData] = useState(true);
+  const [loadData, setLoadData] = useState(true);
 
   const { data, isLoading, error, fetchData, addData } = useContentApi();
 
   useEffect(() => {
 
-    if (isLoading)
+    if (isLoading || !loadData)
       return;
 
     fetchData()
+    setLoadData(false);
 
     // revalidatedData()
     // .then(res=>{
@@ -39,9 +40,9 @@ export default () => {
   })
 
   const dummyItems = [
-    { _id: "1", userName: "user1", content: "content1" },
-    { _id: "2", userName: "user2", content: "content2" },
-    { _id: "3", userName: "user3", content: "content3" },
+    { _id: "1", data: "data1" },
+    { _id: "2", data: "data2" },
+    { _id: "3", data: "data3" },
   ]
 
   return (
@@ -58,7 +59,7 @@ export default () => {
         </div>
       </div>
       <div>
-        <Button onClick={fetchData}>Update List</Button>
+        <Button radius='md' onClick={() => setLoadData(true)}>Update List</Button>
       </div>
     </main>
   )
