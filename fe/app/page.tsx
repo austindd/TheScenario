@@ -14,11 +14,7 @@ export default () => {
 
   return (
     <main className="flex h-full flex-col items-center justify-center p-24 bg-slate">
-      <div>
-        <div className="items-center p-4">
-          <DataForm onSubmit={addData} />
-        </div>
-      </div>
+      <DataForm onSubmit={addData} />
       <DataList items={data} deleteItem={deleteData} />
     </main>
   )
