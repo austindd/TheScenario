@@ -13,11 +13,12 @@ export class AppController {
 
   @Post()
   create(@Body() body: DataDto) {
-      return this.appService.create(body);
-    }
+    return this.appService.create(body);
+  }
 
   @Delete()
   delete (@Query('id') id: string) {
-      return this.appService.delete(id);
-    }
+    return this.appService.delete(id);
   }
+  
+}
