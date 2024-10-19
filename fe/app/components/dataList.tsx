@@ -27,7 +27,7 @@ const ListItem = (props: { item: ContentRecord, deleteItem: (id: string) =>  voi
 export const DataList = (props: { items: ContentRecord[] | null, deleteItem: (id: string) =>  void }) => {
 	const { items, deleteItem } = props;
 	return (
-		<div className="flex flex-col-reverse gap-4 w-full p-24">
+		<div className="flex flex-col-reverse gap-4 w-full lg:px-64 md:px-24 py-6">
 			{items && items.map((item) => <ListItem key={item._id} item={item} deleteItem={deleteItem} />)}
 		</div>
 	)

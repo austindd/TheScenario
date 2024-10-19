@@ -10,28 +10,28 @@ const DataForm = (props: { onSubmit: (values: FormValues) => void }) => {
 		initialValues: {
 			data: '',
 		},
-		onSubmit: (values) => {
+		onSubmit: (values, helpers) => {
 			console.log(values);
 			props.onSubmit(values);
+			helpers.resetForm();
 		},
 	});
 
 	return (
-		<form className="w-full" onSubmit={formik.handleSubmit}>
+		<form className="w-full lg:px-64 md:px-24 pb-6" onSubmit={formik.handleSubmit}>
 			<div className="w-full flex flex-col gap-8">
-				<div className="w-full flex flex-col gap-4">
+				<div className="w-full">
 					<Input
 						name="data"
 						value={formik.values.data}
 						onChange={event => formik.handleChange('data')(event.target.value)}
-						label="Data"
-						placeholder="exampleUser42"
+						label="Write something"
 						size="lg"
 						radius="md"
 						color="primary"
 					/>
 				</div>
-				<div className="flex flex-col gap-4">
+				<div className="flex justify-center w-full">
 					<Button
 						radius='md'
 						type="submit"
