@@ -1,11 +1,11 @@
 import { ContentRecord } from "@/app/components/dataList";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 // import { v4 as uuidv4 } from 'uuid';
 
 const fetchAllContent = async () => {
 	const result = await fetch(`http://127.0.01:3000/data`, {
 		method: 'GET',
-		mode: 'no-cors',
+		// mode: 'no-cors',
 	});
 	return result;
 };
@@ -22,7 +22,7 @@ const addContent = async (data: Omit<ContentRecord, '_id'>) => {
 };
 
 const deleteContent = async (id: string) => {
-	const result = await fetch(`http://127.0.01:3000/data/${id}`, {
+	const result = await fetch(`http://127.0.01:3000/data/?id=${id}`, {
 		method: 'DELETE',
 	});
 	return result;
@@ -58,14 +58,16 @@ export const useContentApi = () => {
 			}
 			setIsLoading(false);
 		});
-	});
+	}, [loadData, setState, setIsLoading, setError]);
 
 	const fetchData = useCallback(() => {
+		console.log('Fetching data');
 		setLoadData(true);
 	}, [setLoadData])
 
 	const addData = useCallback(async (data: Omit<ContentRecord, '_id'>) => {
 		setIsModifyingData(true);
+		setLoadData(false);
 		addContent(data).then(async res => {
 			try {
 				if (res.ok) {
@@ -78,17 +80,19 @@ export const useContentApi = () => {
 				}
 			}
 			setIsModifyingData(false);
-			setLoadData(true);
+			fetchData();
 		}).catch(error => {
 			if (!!error && error instanceof Error) {
 				setError(error);
 			}
 			setIsModifyingData(false);
+			fetchData();
 		});
 	}, [setState, setLoadData, setIsModifyingData, setError]);
 
 	const deleteData = useCallback(async (id: string) => {
 		setIsModifyingData(true);
+		setLoadData(false);
 		deleteContent(id).then(async res => {
 			try {
 				if (res.ok) {
@@ -100,16 +104,17 @@ export const useContentApi = () => {
 				}
 			}
 			setIsModifyingData(false);
-			setLoadData(true);
+			fetchData();
 		}).catch(error => {
 			if (!!error && error instanceof Error) {
 				setError(error);
 			}
 			setIsModifyingData(false);
+			fetchData();
 		});
 	}, [setState, setLoadData, setIsModifyingData, setError]);
 
-	return {
+	const result = useMemo(() => ({
 		data: state,
 		isLoading,
 		isModifyingData,
@@ -117,5 +122,7 @@ export const useContentApi = () => {
 		fetchData,
 		addData,
 		deleteData,
-	};
+	}), [state, isLoading, isModifyingData, error, fetchData, addData, deleteData]);
+
+	return result;
 };
