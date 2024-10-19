@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Data } from "./data.db";
-import { v4 as uuid_v4 } from 'uuid';
 
 
 
@@ -24,8 +23,7 @@ export class DataDao {
     }
 
     async create(data: Data) {
-        const createdData = await this.dataModel.create(data);
-        return createdData;
+        return await this.dataModel.create(data);
     }
 
     async delete(id: string) {
