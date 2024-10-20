@@ -31,6 +31,6 @@ export class DataDao {
     }
 
     async update(data: Data) {
-        return await this.dataModel.updateOne({_id: data}, data)
+        return await this.dataModel.updateOne({_id: data._id}, data)
     }
 }
