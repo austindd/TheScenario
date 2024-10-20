@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { Input, Button } from '@nextui-org/react';
-import { ContentRecord, FormValues } from '@/app/types/formTypes';
+import { ContentRecord } from '@/app/types/formTypes';
 
 const AddDataInput = (props: {
 	content: ContentRecord,

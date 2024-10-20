@@ -69,7 +69,6 @@ export const useContentApi = () => {
 	}, [loadData, setState, setIsLoading, setError]);
 
 	const fetchData = useCallback(() => {
-		console.log('Fetching data');
 		setLoadData(true);
 	}, [setLoadData])
 

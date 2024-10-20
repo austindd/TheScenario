@@ -23,17 +23,10 @@ export default () => {
 	});
   const initialToAdd: ContentRecord = { data: '' };
 
-  console.log('Initial To Edit: ', initialToEdit);
-  console.log('Initial To Add: ', initialToAdd);
-  console.log('Data: ', data);
-
   const onSubmit = useCallback(
     (values: FormValues, helpers: FormikHelpers<FormValues>) => {
-      console.log('Submitting form');
-			console.log('From Form: ', data);
       const { toAdd, toEdit } = values;
       if (editMode) {
-        console.log('Editing data');
         data && data.forEach(item => {
           if (!item._id) return;
           const inputData = toEdit[item._id];
@@ -43,7 +36,6 @@ export default () => {
           }
         });
       } else if (toAdd.data && toAdd.data.length > 0) {
-        console.log('Adding data');
         addData(toAdd);
         helpers.resetForm();
       }
@@ -54,8 +46,6 @@ export default () => {
 		onSubmit,
     enableReinitialize: true,
 	});
-
-  console.log('Formik: ', formik);
 
   return (
     <main className="flex h-full flex-col items-center justify-center p-24 bg-slate">

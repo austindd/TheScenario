@@ -1,6 +1,5 @@
 import { ContentRecord, hasId } from "@/app/types/formTypes";
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
-import { useFormik } from "formik";
 
 const CardContentInput = (props: {
 	id: string,
@@ -61,14 +60,10 @@ export const EditableDataList = (props: {
 	items: ContentRecord[] | null,
 	formData: Record<string, ContentRecord>,
 	deleteItem: (id: string) => void,
-	// editItem: (data: ContentRecord) => void,
-	// onSubmit: () => void
 	editMode?: boolean
 	handleChange: (field: string) => (e: string | React.ChangeEvent<any>) => void
 }) => {
 	const { items, formData, deleteItem, editMode, handleChange } = props;
-	console.log('DataList: ', items, formData);
-	console.log('Form Data: ', formData);
 	return (
 		<div className="flex flex-col-reverse gap-4 w-full">
 			{
