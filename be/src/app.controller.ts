@@ -23,6 +23,7 @@ export class AppController {
   
   @Put()
   update(@Body() body: UpdateDataDto) {
+    console.log("BODY:", body);
     return this.appService.update(body);
   }
 }

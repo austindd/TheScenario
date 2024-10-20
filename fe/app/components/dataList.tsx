@@ -1,14 +1,6 @@
+import { ContentRecord, hasId } from "@/app/types/formTypes";
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import { useFormik } from "formik";
-
-export type ContentRecord = {
-	_id?: string;
-	data: string;
-}
-
-function hasId(obj: ContentRecord): obj is ContentRecord & { _id: string } {
-	return obj._id !== undefined;
-}
 
 const CardContentInput = (props: {
 	id: string,
@@ -19,7 +11,7 @@ const CardContentInput = (props: {
 	return (
 		<div className="w-full">
 			<Input
-				name={`fields.${id}`}
+				name={`toEdit[${id}].data`}
 				value={text}
 				onChange={handleChange}
 				size="lg"
@@ -65,45 +57,25 @@ const ListItem = (props: {
 	)
 };
 
-type FormValues = { fields: Record<string, ContentRecord> };
-
 export const DataList = (props: {
 	items: ContentRecord[] | null,
+	formData: Record<string, ContentRecord>,
 	deleteItem: (id: string) => void,
-	editItem: (data: ContentRecord) => void,
-	onSubmit: () => void
+	// editItem: (data: ContentRecord) => void,
+	// onSubmit: () => void
 	editMode?: boolean
+	handleChange: (field: string) => (e: string | React.ChangeEvent<any>) => void
 }) => {
-	const { items, deleteItem, editItem, onSubmit, editMode } = props;
-	const fields: Record<string, ContentRecord> = {};
-	items && items.forEach(item => {
-		if (!item._id) return;
-		fields[item._id] = item;
-	});
-	const formik = useFormik<FormValues>({
-		initialValues: { fields },
-		onSubmit: (data, helpers) => {
-			console.log('From Form: ', data);
-			items && items.forEach(item => {
-				if (!item._id) return;
-				const inputData = data.fields[item._id];
-				if (!inputData) return;
-				if (inputData._id === item._id && inputData.data !== item.data) {
-					editItem(inputData);
-				}
-			});
-			onSubmit();
-		},
-	});
+	const { items, formData, deleteItem, editMode, handleChange } = props;
+	console.log('DataList: ', items, formData);
+	console.log('Form Data: ', formData);
 	return (
-		<form className="w-full lg:px-64 md:px-24 py-6" onSubmit={formik.handleSubmit}>
-			<div className="flex flex-col-reverse gap-4 w-full">
-				{
-					items && items.map((item) =>
-						hasId(item) && <ListItem key={item._id} item={item} deleteItem={deleteItem} editMode={editMode} handleChange={formik.handleChange(`fields.${item._id}.data`)} />)
-				}
-			</div>
-		</form>
+		<div className="flex flex-col-reverse gap-4 w-full">
+			{
+				Object.values(formData).map((item) =>
+					hasId(item) && <ListItem key={item._id} item={item} deleteItem={deleteItem} editMode={editMode} handleChange={handleChange(`toEdit[${item._id}].data`)} />)
+			}
+		</div>
 	)
 }
 

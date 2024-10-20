@@ -1,52 +1,44 @@
-import React from 'react';
-import { useFormik } from 'formik';
+import React, { ChangeEvent } from 'react';
 import { Input, Button } from '@nextui-org/react';
-import { ContentRecord } from '@/app/components/dataList';
+import { ContentRecord, FormValues } from '@/app/types/formTypes';
 
-type FormValues = Omit<ContentRecord, '_id'>;
-
-const DataForm = (props: { onSubmit: (values: FormValues) => void, onClickEditButton: () => void }) => {
-	const formik = useFormik<FormValues>({
-		initialValues: {
-			data: '',
-		},
-		onSubmit: (values, helpers) => {
-			console.log(values);
-			props.onSubmit(values);
-			helpers.resetForm();
-		},
-	});
+const DataForm = (props: {
+	content: ContentRecord,
+	onClickEditButton: () => void
+	handleChange: (field: string) => (e: string | ChangeEvent<any>) => void
+	editMode: boolean
+}) => {
+	const { content, handleChange, onClickEditButton, editMode } = props;
 
 	return (
-		<form className="w-full lg:px-64 md:px-24 pb-6" onSubmit={formik.handleSubmit}>
-			<div className="w-full flex flex-col gap-8">
-				<div className="w-full">
-					<Input
-						name="data"
-						value={formik.values.data}
-						onChange={event => formik.handleChange('data')(event.target.value)}
-						label="Write something"
-						size="lg"
-						radius="md"
-						color="primary"
-					/>
-				</div>
-				<div className="flex justify-center w-full gap-4">
-					<Button
-						radius='md'
-						type="submit"
-						size="lg"
-						color="secondary"
-					>Submit</Button>
-					<Button
-						radius='md'
-						onClick={props.onClickEditButton}
-						size="lg"
-						color="secondary"
-					>Edit</Button>
-				</div>
+		<div className="w-full flex flex-col gap-8 pb-8">
+			<div className="w-full">
+				<Input
+					name="toAdd.data"
+					value={content.data}
+					onChange={handleChange('toAdd.data')}
+					label="Write something"
+					size="lg"
+					radius="md"
+					color="primary"
+				/>
 			</div>
-		</form>
+			<div className="flex justify-center w-full gap-4">
+				<Button
+					radius='md'
+					type="submit"
+					size="lg"
+					color="secondary"
+				>{!editMode ? "Submit" : "Submit Edits"}</Button>
+				{!editMode && <Button
+					radius='md'
+					onClick={onClickEditButton}
+					size="lg"
+					color="secondary"
+				>Edit</Button>
+				}
+			</div>
+		</div>
 	);
 };
 

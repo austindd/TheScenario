@@ -1,4 +1,4 @@
-import { ContentRecord } from "@/app/components/dataList";
+import { ContentRecord } from "@/app/types/formTypes";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const fetchAllContent = async () => {
