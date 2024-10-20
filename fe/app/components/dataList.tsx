@@ -5,7 +5,11 @@ export type ContentRecord = {
 	data: string;
 }
 
-const ListItem = (props: { item: ContentRecord, deleteItem: (id: string) =>  void }) => {
+const ListItem = (props: {
+	item: ContentRecord,
+	deleteItem: (id: string) => void,
+	editItem: (item: ContentRecord & { _id: string }) => void
+}) => {
 	const { item, deleteItem } = props;
 	const { _id, data } = item;
 	return (
@@ -24,11 +28,15 @@ const ListItem = (props: { item: ContentRecord, deleteItem: (id: string) =>  voi
 	)
 };
 
-export const DataList = (props: { items: ContentRecord[] | null, deleteItem: (id: string) =>  void }) => {
-	const { items, deleteItem } = props;
+export const DataList = (props: {
+	items: ContentRecord[] | null,
+	deleteItem: (id: string) => void,
+	editItem: (item: ContentRecord & { _id: string }) => void
+}) => {
+	const { items, deleteItem, editItem } = props;
 	return (
 		<div className="flex flex-col-reverse gap-4 w-full lg:px-64 md:px-24 py-6">
-			{items && items.map((item) => <ListItem key={item._id} item={item} deleteItem={deleteItem} />)}
+			{items && items.map((item) => <ListItem key={item._id} item={item} deleteItem={deleteItem} editItem={editItem} />)}
 		</div>
 	)
 }

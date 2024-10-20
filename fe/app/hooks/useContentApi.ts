@@ -26,6 +26,17 @@ const deleteContent = async (id: string) => {
 	return result;
 }
 
+const updateContent = async (data: ContentRecord) => {
+	const result = await fetch(`http://127.0.01:3000/data`, {
+		method: 'PUT',
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	return result;
+}
+
 export const useContentApi = () => {
 	const [state, setState] = useState<ContentRecord[] | null>(null);
 	const [loadData, setLoadData] = useState(true);
@@ -92,6 +103,21 @@ export const useContentApi = () => {
 		});
 	}, [setState, setLoadData, setIsModifyingData, setError]);
 
+	const updateData = useCallback(async (data: ContentRecord) => {
+		setIsModifyingData(true);
+		setLoadData(false);
+		updateContent(data).then(async res => {
+			setIsModifyingData(false);
+			fetchData();
+		}).catch(error => {
+			if (!!error && error instanceof Error) {
+				setError(error);
+			}
+			setIsModifyingData(false);
+			fetchData();
+		});
+	}, [setState, setLoadData, setIsModifyingData, setError]);
+
 	const result = useMemo(() => ({
 		data: state,
 		isLoading,
@@ -100,6 +126,7 @@ export const useContentApi = () => {
 		fetchData,
 		addData,
 		deleteData,
+		updateData,
 	}), [state, isLoading, isModifyingData, error, fetchData, addData, deleteData]);
 
 	return result;
