@@ -57,7 +57,7 @@ const ListItem = (props: {
 	)
 };
 
-export const DataList = (props: {
+export const EditableDataList = (props: {
 	items: ContentRecord[] | null,
 	formData: Record<string, ContentRecord>,
 	deleteItem: (id: string) => void,
@@ -79,4 +79,4 @@ export const DataList = (props: {
 	)
 }
 
-export default DataList;
+export default EditableDataList;

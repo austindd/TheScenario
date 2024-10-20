@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import { Input, Button } from '@nextui-org/react';
 import { ContentRecord, FormValues } from '@/app/types/formTypes';
 
-const DataForm = (props: {
+const AddDataInput = (props: {
 	content: ContentRecord,
 	onClickEditButton: () => void
 	handleChange: (field: string) => (e: string | ChangeEvent<any>) => void
@@ -42,4 +42,4 @@ const DataForm = (props: {
 	);
 };
 
-export default DataForm;
+export default AddDataInput;

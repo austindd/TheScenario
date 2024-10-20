@@ -1,8 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react"
-import DataList from "@/app/components/dataList";
-import DataForm from "@/app/components/dataForm";
+import EditableDataList from "@/app/components/editableDataList";
+import AddDataInput from "@/app/components/addDataInput";
 import { useContentApi } from "@/app/hooks/useContentApi";
 import { ContentRecord, FormValues } from "@/app/types/formTypes";
 import { FormikHelpers, useFormik } from "formik";
@@ -60,8 +60,8 @@ export default () => {
   return (
     <main className="flex h-full flex-col items-center justify-center p-24 bg-slate">
       <form className="w-full lg:px-64 md:px-24" onSubmit={formik.handleSubmit}>
-        <DataForm content={formik.values.toAdd} handleChange={(field: string) => formik.handleChange(field)} onClickEditButton={onClickEditButton} editMode={editMode}  />
-        <DataList items={data} formData={formik.values.toEdit} deleteItem={deleteData} handleChange={(field: string) => formik.handleChange(field)} editMode={editMode} />
+        <AddDataInput content={formik.values.toAdd} handleChange={(field: string) => formik.handleChange(field)} onClickEditButton={onClickEditButton} editMode={editMode}  />
+        <EditableDataList items={data} formData={formik.values.toEdit} deleteItem={deleteData} handleChange={(field: string) => formik.handleChange(field)} editMode={editMode} />
       </form>
     </main>
   )
