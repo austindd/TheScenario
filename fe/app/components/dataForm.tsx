@@ -5,7 +5,7 @@ import { ContentRecord } from '@/app/components/dataList';
 
 type FormValues = Omit<ContentRecord, '_id'>;
 
-const DataForm = (props: { onSubmit: (values: FormValues) => void }) => {
+const DataForm = (props: { onSubmit: (values: FormValues) => void, onClickEditButton: () => void }) => {
 	const formik = useFormik<FormValues>({
 		initialValues: {
 			data: '',
@@ -31,15 +31,19 @@ const DataForm = (props: { onSubmit: (values: FormValues) => void }) => {
 						color="primary"
 					/>
 				</div>
-				<div className="flex justify-center w-full">
+				<div className="flex justify-center w-full gap-4">
 					<Button
 						radius='md'
 						type="submit"
 						size="lg"
 						color="secondary"
-					>
-						Submit
-					</Button>
+					>Submit</Button>
+					<Button
+						radius='md'
+						onClick={props.onClickEditButton}
+						size="lg"
+						color="secondary"
+					>Edit</Button>
 				</div>
 			</div>
 		</form>
