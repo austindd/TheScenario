@@ -29,4 +29,8 @@ export class DataDao {
     async delete(id: string) {
         return await this.dataModel.deleteOne({_id: id})
     }
+
+    async update(data: Data) {
+        return await this.dataModel.updateOne({_id: data}, data)
+    }
 }

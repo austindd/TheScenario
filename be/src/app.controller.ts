@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Req, Delete, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Req, Delete, Param, Query, Put } from '@nestjs/common';
 import { AppService } from './app.service';
-import { DataDto } from 'src/data.dto';
+import { CreateDataDto, UpdateDataDto } from 'src/data.dto';
 
 @Controller("data")
 export class AppController {
@@ -12,7 +12,7 @@ export class AppController {
   }
 
   @Post()
-  create(@Body() body: DataDto) {
+  create(@Body() body: CreateDataDto) {
     return this.appService.create(body);
   }
 
@@ -21,4 +21,8 @@ export class AppController {
     return this.appService.delete(id);
   }
   
+  @Put()
+  update(@Body() body: UpdateDataDto) {
+    return this.appService.update(body);
+  }
 }
