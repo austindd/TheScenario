@@ -39,7 +39,7 @@ export default () => {
           const inputData = toEdit[item._id];
           if (!inputData) return;
           if (inputData._id === item._id && inputData.data !== item.data) {
-            updateData(inputData);
+            updateData(inputData).then(() => setEditMode(false)).catch(() => setEditMode(false));
           }
         });
       } else if (toAdd.data && toAdd.data.length > 0) {
